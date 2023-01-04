@@ -14,6 +14,7 @@ class NeuralNetwork:
     def __init__(self, nx, nodes):
         """
         class constructor
+        :param nx: is the number of input features to the neuron
         """
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
@@ -36,6 +37,8 @@ class NeuralNetwork:
     def forward_prop(self, X):
         """
         Calculates the forward propagation of the neural network
+        :param X: np array with the input data of shape (nx, m)
+        :return: the private attributes __A1 and __A2
         """
         z1 = np.matmul(self.__W1, X) + self.__b1
         self.__A1 = 1 / (1 + np.exp(-z1))
@@ -46,6 +49,9 @@ class NeuralNetwork:
     def cost(self, Y, A):
         """
         calculates the cost of the model using logistic regression
+        :param Y: a np array with correct labels of shape (1, m)
+        :param A: a np array with the activated output of shape (1, m)
+        :return: the cost
         """
         cost = Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)
         cost = np.sum(cost)
@@ -55,6 +61,9 @@ class NeuralNetwork:
     def evaluate(self, X, Y):
         """
         evaluates the neural network prediction
+        :param X: np array with input data of shape (nx, m)
+        :param Y: np array with correct label of shape (1, m)
+        :return: neuron´s prediction and cost of the network
         """
         self.forward_prop(X)
         prediction = np.where(self.__A2 >= 0.5, 1, 0)
@@ -64,6 +73,12 @@ class NeuralNetwork:
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """
         calculates one pass of gradient descent on the neuron
+        :param X: np array with input data of shape (nx, m)
+        :param Y: np array with correct labels of shape (1, m)
+        :param A1: np array with activated hidden layer output of shape (1, m)
+        :param A2: np array with activated output of shape (1, m)
+        :param alpha: the learning rate
+        :return: no return
         """
         # gradient descent for hidden layer
         dz2 = A2 - Y
