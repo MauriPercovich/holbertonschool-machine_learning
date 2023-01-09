@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""
-Module to create a layer
-"""
+"""Layers"""
 import tensorflow.compat.v1 as tf
 
 
 def create_layer(prev, n, activation):
-    """
-    a function that create layers
-    """
-    init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
-    layer = tf.layers.Dense(units=n, bias_initializer=init,
+    """Returns: the tensor output of the layer"""
+    initializer = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    layer = tf.keras.layers.Dense(units=n, kernel_initializer=initializer,
                                   activation=activation, name='layer')(prev)
     return layer
